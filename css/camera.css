@@ -1,0 +1,182 @@
+// FILE: css/camera.css
+
+/*
+    Camera Layout & Core UI
+    -----------------------
+    Purpose:
+    - Define the camera viewport and layering model
+    - Ensure correct aspect ratio handling on mobile devices
+    - Provide DSLR-style framing with minimal visual noise
+    - Keep performance-critical layers simple and GPU-friendly
+*/
+
+/* ================================
+   CAMERA CONTAINER
+   ================================ */
+
+.camera-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    overflow: hidden;
+}
+
+/*
+    The video element is the raw camera feed.
+    It is kept visually hidden behind the canvas layer,
+    but remains active for frame extraction.
+*/
+#cameraVideo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1); /* Mirror for front-camera UX parity */
+    opacity: 0;
+    pointer-events: none;
+}
+
+/*
+    Canvas is the primary render surface.
+    All filters, exposure simulation, and LUT processing
+    are applied here to avoid DOM thrashing.
+*/
+#cameraCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    background-color: #000000;
+}
+
+/* ================================
+   TAP-TO-FOCUS FEEDBACK
+   ================================ */
+
+.focus-ring {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--color-focus);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-medium);
+}
+
+.focus-ring.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ================================
+   TOP STATUS BAR
+   ================================ */
+
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-top: calc(8px + var(--safe-area-top));
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0)
+    );
+    z-index: 10;
+    pointer-events: none;
+}
+
+.status-text {
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+}
+
+/* ================================
+   BOTTOM CONTROL BAR
+   ================================ */
+
+.control-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: calc(16px + var(--safe-area-bottom));
+    padding-top: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.75),
+        rgba(0, 0, 0, 0)
+    );
+    z-index: 10;
+}
+
+/* ================================
+   SHUTTER BUTTON
+   ================================ */
+
+.shutter-btn {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.shutter-btn:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.shutter-inner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+}
+
+/* ================================
+   SLIDER GROUP WRAPPER
+   ================================ */
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 64px;
+}
+
+/*
+    Labels are intentionally small and subtle,
+    mirroring physical camera UI conventions.
+*/
+.slider-group label {
+    font-size: var(--font-size-xs);
+}
