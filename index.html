@@ -1,0 +1,115 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Glass Flipbook PDF Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Premium glassmorphism PDF flipbook viewer. 100% client-side, runs entirely in your browser." />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- PDF.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.js"></script>
+  <!-- StPageFlip CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/st-pageflip@2.0.7/dist/css/pageflip.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/st-pageflip@2.0.7/dist/js/pageflip.min.js"></script>
+</head>
+<body>
+  <div class="app-root">
+    <!-- Background gradient / particles -->
+    <div class="background-gradient"></div>
+    <div class="background-orbits">
+      <span class="orbit orbit-1"></span>
+      <span class="orbit orbit-2"></span>
+      <span class="orbit orbit-3"></span>
+    </div>
+
+    <!-- Landing Screen -->
+    <main class="landing" aria-labelledby="landing-title">
+      <section class="landing-card" role="dialog" aria-modal="true">
+        <h1 id="landing-title" class="landing-title">Glass Flipbook Studio</h1>
+        <p class="landing-subtitle">
+          Drop any PDF and experience it as a smooth, realistic page‑turning flipbook. 100% offline in your browser.
+        </p>
+
+        <div class="landing-actions">
+          <label for="pdf-input" class="upload-button" role="button" tabindex="0" aria-label="Upload PDF from your device">
+            <span class="upload-glow"></span>
+            <span class="upload-inner">
+              <span class="upload-icon" aria-hidden="true">📂</span>
+              <span class="upload-text-main">Upload PDF</span>
+              <span class="upload-text-sub">No upload • All processing stays local</span>
+            </span>
+          </label>
+          <input id="pdf-input" type="file" accept="application/pdf" aria-hidden="true" />
+        </div>
+
+        <p class="landing-hint">
+          Tip: For the best experience, use high‑resolution PDFs with visual content.
+        </p>
+      </section>
+    </main>
+
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" aria-hidden="true">
+      <div class="processing-card">
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <div class="loader-pulse"></div>
+        <p class="loader-title">Rendering your flipbook…</p>
+        <p class="loader-subtitle">Converting pages and building smooth page‑flip animation.</p>
+      </div>
+    </div>
+
+    <!-- Flipbook Viewer -->
+    <div class="viewer hidden" aria-hidden="true">
+      <!-- Glass Toolbar -->
+      <header class="viewer-toolbar" aria-label="Flipbook controls">
+        <div class="toolbar-left">
+          <button class="toolbar-btn" id="btn-prev" aria-label="Previous page">
+            ‹
+          </button>
+          <button class="toolbar-btn" id="btn-next" aria-label="Next page">
+            ›
+          </button>
+          <div class="toolbar-divider"></div>
+          <div class="page-indicator" aria-live="polite">
+            <span id="page-current">1</span>
+            <span class="page-sep">/</span>
+            <span id="page-total">1</span>
+          </div>
+        </div>
+
+        <div class="toolbar-center">
+          <span class="toolbar-title">Glass Flipbook</span>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="toolbar-btn" id="btn-zoom-out" aria-label="Zoom out">
+            −
+          </button>
+          <button class="toolbar-btn" id="btn-zoom-in" aria-label="Zoom in">
+            +
+          </button>
+          <div class="toolbar-divider"></div>
+          <button class="toolbar-btn" id="btn-fullscreen" aria-label="Toggle fullscreen">
+            ⛶
+          </button>
+        </div>
+      </header>
+
+      <!-- Flipbook Container -->
+      <main class="viewer-main">
+        <div class="flipbook-shell">
+          <!-- StPageFlip will mount into this element -->
+          <div id="flipbook" class="flipbook" aria-label="PDF flipbook"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
