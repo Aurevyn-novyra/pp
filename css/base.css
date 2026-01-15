@@ -1,0 +1,178 @@
+// FILE: css/base.css
+
+/*
+    Base Styles
+    -----------
+    Purpose:
+    - Establish global design tokens
+    - Normalize layout behavior
+    - Enforce mobile-first, dark, cinematic baseline
+    - Avoid component-specific styling (handled in other files)
+*/
+
+:root {
+    /* Color System */
+    --color-bg: #000000;
+    --color-surface: #0b0b0b;
+    --color-surface-elevated: #141414;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-text-primary: #ffffff;
+    --color-text-secondary: rgba(255, 255, 255, 0.65);
+    --color-accent: #ffffff;
+
+    /* UI Feedback */
+    --color-focus: rgba(255, 255, 255, 0.9);
+    --color-danger: #ff3b30;
+
+    /* Typography */
+    --font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-size-xs: 11px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+
+    /* Layout */
+    --safe-area-top: env(safe-area-inset-top);
+    --safe-area-bottom: env(safe-area-inset-bottom);
+
+    /* Motion */
+    --transition-fast: 120ms ease-out;
+    --transition-medium: 240ms ease-out;
+    --transition-slow: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ================================
+   RESET / NORMALIZATION
+   ================================ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+}
+
+/* Prevent accidental text selection during camera interactions */
+body {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ================================
+   APP ROOT
+   ================================ */
+
+.app-root {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-bg);
+}
+
+/* ================================
+   GENERIC ELEMENTS
+   ================================ */
+
+button {
+    font-family: inherit;
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    margin: 0;
+}
+
+/* ================================
+   TEXT & LABELS
+   ================================ */
+
+label {
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+}
+
+/* ================================
+   OVERLAYS
+   ================================ */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+.overlay-content {
+    max-width: 320px;
+    padding: 24px;
+    text-align: center;
+}
+
+.overlay-content h1 {
+    margin: 0 0 12px 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.overlay-content p {
+    margin: 0 0 20px 0;
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--color-accent);
+    color: #000000;
+    border-radius: 8px;
+    font-size: var(--font-size-md);
+    font-weight: 500;
+    transition: transform var(--transition-fast),
+                opacity var(--transition-fast);
+}
+
+.primary-btn:active {
+    transform: scale(0.96);
+    opacity: 0.9;
+}
